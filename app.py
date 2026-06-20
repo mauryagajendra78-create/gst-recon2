@@ -284,13 +284,14 @@ def upload():
             total_book_entries=total_book_entries
         )
     except ValueError as ve:
-        return f"⚠️ Format error: {ve}. Please check if headers like GSTIN, Invoice, Date, Value exist."
-    except pd.errors.EmptyDataError:
-        return "⚠️ Excel file is empty or corrupted. Please upload a valid sheet."
-    except Exception as e:
-        if "dtype" in str(e).lower():
-            return "⚠️ Excel parsing error: Mixed or invalid data types found. Please clean the sheet."
-        return f"⚠️ Unexpected error: {str(e)}. Please check your sheet content."
+    return f"⚠️ Format error: {ve}. Please check if headers like GSTIN, Invoice, Date, Value exist."
+
+except pd.errors.EmptyDataError:
+    return "⚠️ Excel file is empty or corrupted. Please upload a valid sheet."
+
+except Exception as e:
+    import traceback
+    return f"<pre>{traceback.format_exc()}</pre>"
 
 
 @app.route('/save')
