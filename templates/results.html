@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reconciliation Results</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Google Font for better typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #0b1f3a 0%, #1e3a5f 100%);
+      color: #e0e6ed;
+      font-family: 'Inter', sans-serif;
+      padding: 30px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      background: linear-gradient(135deg, #142a45 0%, #1c3a5a 100%);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      color: #ffffff;
+      margin-bottom: 30px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .nav-tabs .nav-link {
+      color: #e0e6ed;
+      background-color: #142a45;
+      border: 1px solid #2c3e50;
+      border-radius: 8px 8px 0 0;
+      transition: all 0.3s;
+    }
+
+    .nav-tabs .nav-link:hover {
+      background-color: #1c2d4a;
+      color: #00d4ff;
+    }
+
+    .nav-tabs .nav-link.active {
+      background: linear-gradient(135deg, #00d4ff 0%, #1c2d4a 100%);
+      color: #fff;
+      border-bottom: 3px solid #00d4ff;
+      box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+    }
+
+    .tab-content {
+      margin-top: 20px;
+      background-color: #0f1a2a;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #2c3e50;
+    }
+
+    .table-responsive {
+      overflow-x: auto; /* Ensures horizontal scroll for wide tables */
+      -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
+    }
+
+    .table {
+      font-size: 13px; /* Slightly larger for readability */
+      margin-bottom: 0;
+      min-width: 100%; /* Prevents shrinking */
+      white-space: nowrap; /* Prevents text wrapping in cells */
+    }
+
+    .table th {
+      background: linear-gradient(135deg, #1c2d4a 0%, #2e4a7b 100%);
+      color: #ffffff;
+      font-weight: 600;
+      border: none;
+      padding: 12px;
+      white-space: nowrap; /* Keeps headers from wrapping */
+    }
+
+    .table td {
+      background-color: #142a45;
+      color: #e0e6ed;
+      text-transform: uppercase;
+      border: none;
+      padding: 10px;
+      transition: background-color 0.2s;
+      word-break: break-all; /* Breaks very long words if needed */
+    }
+
+    .table tbody tr:hover {
+      background-color: #1a2b3d;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+      background-color: #162a40;
+    }
+
+    .duplicate-cell {
+      color: #ff4c4c;
+      font-weight: bold;
+    }
+
+    .btn-custom {
+      background: linear-gradient(135deg, #00d4ff 0%, #2e4a7b 100%);
+      color: #ffffff;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 8px;
+      margin-top: 20px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+    }
+
+    .btn-secondary-custom {
+      background-color: #2e4a7b;
+      color: #ffffff;
+      border: none;
+      padding: 10px 15px;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 8px;
+      margin-right: 10px;
+      transition: background-color 0.2s;
+    }
+
+    .btn-secondary-custom:hover {
+      background-color: #3c5fa0;
+    }
+
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    footer a {
+      color: #00d4ff;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .nav-tabs {
+        flex-direction: column;
+      }
+      .table {
+        font-size: 11px; /* Smaller on mobile for better fit */
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2><i class="bi bi-bar-chart-line"></i> Reconciliation Results</h2>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <button class="btn btn-secondary-custom" onclick="window.history.back();"><i class="bi bi-arrow-left"></i> Back to Home</button>
+      <small class="text-muted">Last updated: {{ last_updated|default('N/A') }}</small>
+    </div>
+
+    <ul class="nav nav-tabs" id="resultTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#matched" type="button" role="tab" data-bs-toggle="tooltip" title="Fully matched records between GSTR-2B and Purchase files.">
+          <i class="bi bi-check-circle"></i> Matched ({{ count_matched }})
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#partial" type="button" role="tab" data-bs-toggle="tooltip" title="Records with partial matches (e.g., invoice number matches but amounts differ).">
+          <i class="bi bi-exclamation-triangle"></i> Partial Matches ({{ count_partial }})
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#notin2b" type="button" role="tab" data-bs-toggle="tooltip" title="Records in Purchase file not found in GSTR-2B.">
+          <i class="bi bi-file-earmark-x"></i> Not in GSTR-2B ({{ count_2b }})
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#notinbooks" type="button" role="tab" data-bs-toggle="tooltip" title="Records in GSTR-2B not found in Purchase file.">
+          <i class="bi bi-file-earmark-plus"></i> Not in Books ({{ count_books }})
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#mismatched" type="button" role="tab" data-bs-toggle="tooltip" title="Records with mismatches in key fields.">
+          <i class="bi bi-x-circle"></i> Mismatched ({{ count_mismatch }})
+        </button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="resultTabsContent">
+      <div class="tab-pane fade show active" id="matched" role="tabpanel">
+        <div class="table-responsive">
+          {{ matched|safe }}
+        </div>
+      </div>
+      <div class="tab-pane fade" id="partial" role="tabpanel">
+        <div class="table-responsive">
+          {{ partial_invoice_match|safe }}
+        </div>
+      </div>
+      <div class="tab-pane fade" id="notin2b" role="tabpanel">
+        <div class="table-responsive">
+          {{ not_in_2b|safe }}
+        </div>
+      </div>
+      <div class="tab-pane fade" id="notinbooks" role="tabpanel">
+        <div class="table-responsive">
+          {{ not_in_books|safe }}
+        </div>
+      </div>
+      <div class="tab-pane fade" id="mismatched" role="tabpanel">
+        <div class="table-responsive">
+          {{ mismatched|safe }}
+        </div>
+      </div>
+    </div>
+
+    <form action="/save" onsubmit="showLoading()">
+      <button type="submit" class="btn-custom" id="saveBtn"><i class="bi bi-download"></i> Save Files (CSV + Excel)</button>
+      <div id="loading" class="mt-2 text-center" style="display: none;">
+        <div class="spinner-border text-info" role="status">
+          <span class="visually-hidden">Saving...</span>
+        </div> Saving files... Please wait.
+      </div>
+    </form>
+
+    <footer>
+      Website developed by <strong><a href="https://rankeryou.w3spaces.com/" target="_blank">Gajendra Maurya</a></strong>
+    </footer>
+  </div>
+
+  <!-- Bootstrap JS for tooltips and tabs -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function showLoading() {
+      document.getElementById('saveBtn').disabled = true;
+      document.getElementById('loading').style.display = 'block';
+    }
+
+    // Initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+  </script>
+</body>
+
+</html>

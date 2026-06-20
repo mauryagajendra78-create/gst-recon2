@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Files Saved</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #0b1f3a 0%, #1e3a5f 100%);
+      color: #e0e6ed;
+      font-family: 'Inter', sans-serif;
+      padding: 40px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 700px;
+      background: linear-gradient(135deg, #142a45 0%, #1c3a5a 100%);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      color: #ffffff;
+      margin-bottom: 30px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    li {
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #1c2d4a 0%, #2e4a7b 100%);
+      padding: 15px 20px;
+      border-radius: 10px;
+      border: 1px solid #2c3e50;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    li:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+    }
+
+    li i {
+      margin-right: 10px;
+      color: #00d4ff;
+    }
+
+    a {
+      color: #00d4ff;
+      text-decoration: none;
+      font-weight: 600;
+      margin: 0 5px;
+      transition: color 0.2s;
+    }
+
+    a:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    .download-links {
+      margin-top: 10px;
+    }
+
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    footer a {
+      color: #00d4ff;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2><i class="bi bi-check-circle-fill"></i> Files Saved Successfully</h2>
+
+    <ul>
+      <li>
+        <i class="bi bi-file-earmark-x"></i> Not in GSTR-2B:
+        <div class="download-links">
+          <a href="/download/not_in_2b.csv"><i class="bi bi-download"></i> Download CSV</a> |
+          <a href="/download/not_in_2b.xlsx"><i class="bi bi-file-earmark-spreadsheet"></i> Download Excel</a>
+        </div>
+      </li>
+      <li>
+        <i class="bi bi-file-earmark-plus"></i> Not in Books:
+        <div class="download-links">
+          <a href="/download/not_in_books.csv"><i class="bi bi-download"></i> Download CSV</a> |
+          <a href="/download/not_in_books.xlsx"><i class="bi bi-file-earmark-spreadsheet"></i> Download Excel</a>
+        </div>
+      </li>
+      <li>
+        <i class="bi bi-exclamation-triangle"></i> Mismatched Entries:
+        <div class="download-links">
+          <a href="/download/mismatched.csv"><i class="bi bi-download"></i> Download CSV</a> |
+          <a href="/download/mismatched.xlsx"><i class="bi bi-file-earmark-spreadsheet"></i> Download Excel</a>
+        </div>
+      </li>
+      <li>
+        <i class="bi bi-check-circle"></i> Partial Invoice Matches:
+        <div class="download-links">
+          <a href="/download/partial_invoice_match.csv"><i class="bi bi-download"></i> Download CSV</a> |
+          <a href="/download/partial_invoice_match.xlsx"><i class="bi bi-file-earmark-spreadsheet"></i> Download Excel</a>
+        </div>
+      </li>
+      <li>
+        <i class="bi bi-check-circle-fill"></i> Matched Entries:
+        <div class="download-links">
+          <a href="/download/matched.csv"><i class="bi bi-download"></i> Download CSV</a> |
+          <a href="/download/matched.xlsx"><i class="bi bi-file-earmark-spreadsheet"></i> Download Excel</a>
+        </div>
+      </li>
+    </ul>
+
+    <footer>
+      Website developed by <strong><a href="https://rankeryou.w3spaces.com/" target="_blank">Gajendra Maurya</a></strong>
+    </footer>
+  </div>
+</body>
+
+</html>
