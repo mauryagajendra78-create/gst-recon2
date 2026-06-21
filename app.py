@@ -269,6 +269,9 @@ def upload():
         temp_results['partial_invoice_match'] = partial_invoice_match
         temp_results['matched'] = matched
 
+
+return "Upload Successful"
+        
         return render_template('results.html',
             not_in_2b=clean_display(not_in_2b),
             not_in_books=clean_display(not_in_books),
